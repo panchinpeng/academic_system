@@ -74,7 +74,7 @@ class Login extends Component {
     this.props.history.replace('/')
   }
  
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     let {idx, username} = this.props.user
     // if logined redirect home
     checkLogin(idx, username, null, this.redirectHome)

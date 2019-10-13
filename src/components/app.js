@@ -11,7 +11,7 @@ import { USER_SET_INFO } from '../redux/actions'
 
 
 class App extends Component {
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     if (Cookies.get('idx') && Cookies.get('username')) {
       this.props.setUser({ username: Cookies.get('username') , idx: Cookies.get('idx')})
     }
