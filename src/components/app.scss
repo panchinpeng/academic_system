@@ -1,3 +1,17 @@
-.test {
-  color: red;
+html,
+body {
+  height: 100%;
 }
+
+#root {
+  background-color: rgba(242, 242, 242, 1);
+  height: 100%;
+
+  .container-fluid {
+    height: calc(100vh - 100px)
+  }
+  .container{
+    height: 100%;
+  }
+}
+

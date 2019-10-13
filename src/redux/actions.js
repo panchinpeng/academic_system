@@ -1,1 +1,1 @@
-export const TESTACTION = 'TEST'
+export const USER_SET_INFO = 'USER_SET_INFO'
