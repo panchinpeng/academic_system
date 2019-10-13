@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 
-import { userLoginAjax } from '../../ajax/user'
+import { userLoginAjax, checkLogin } from '../../ajax/user'
 import { USER_SET_INFO } from '../../redux/actions'
 import './index.scss'
 class Login extends Component {
@@ -40,9 +40,9 @@ class Login extends Component {
   }
 
   loginSuccess = (res) => {
-    this.props.setLoginInfo(res)
     Cookies.set('username', res.username, { expires: 1/48 })
     Cookies.set('idx', res.idx, { expires: 1/48 })
+    this.props.setLoginInfo({ username: res.username, idx: res.idx})
     this.props.history.replace('/')
   }
   handleSubmit = (event) => {
@@ -69,6 +69,17 @@ class Login extends Component {
     usernameInput: {},
     passwordInput: {}
   }
+
+  redirectHome = () => {
+    this.props.history.replace('/')
+  }
+ 
+  componentWillMount(){
+    let {idx, username} = this.props.user
+    // if logined redirect home
+    checkLogin(idx, username, null, this.redirectHome)
+  }
+
   render() {
     
     return (
@@ -103,7 +114,7 @@ class Login extends Component {
 }
 
 let mapStateToProps = (state) => ({
-
+  user: state.user
 })
 
 let mapDispatchToProps = (dispatch) => ({

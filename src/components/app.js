@@ -1,11 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import Login from '../views/login'
 import Home from '../views/home'
 import './app.scss'
+import { USER_SET_INFO } from '../redux/actions'
+
+
+
 class App extends Component {
+  componentWillMount(){
+    if (Cookies.get('idx') && Cookies.get('username')) {
+      this.props.setUser({ username: Cookies.get('username') , idx: Cookies.get('idx')})
+    }
+  }
   render() {
     return (
         <BrowserRouter>
@@ -23,7 +33,13 @@ class App extends Component {
 }
 
 let mapStateToProps = (state) => ({
-  test: state.test
+ 
 })
 
-export default connect(mapStateToProps)(App)
+let mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => {
+    dispatch({ type: USER_SET_INFO, data: user})
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

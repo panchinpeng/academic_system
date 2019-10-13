@@ -8,13 +8,14 @@ import { withRouter } from 'react-router-dom'
 
 
 import { checkLogin } from '../../ajax/user'
-
+import { USER_DEL } from '../../redux/actions'
 import './index.scss'
 class Home extends Component {
   noLogin = () => {
     this.props.history.replace('/login')
     Cookies.remove('idx')
     Cookies.remove('username')
+    this.props.removeUser()
   }
   componentWillMount(){
     // console.log(Cookies.get('idx'), Cookies.get('username'))
@@ -40,7 +41,12 @@ class Home extends Component {
 }
 
 let mapStateToProps = (state) => ({
-  test: state.test
 })
 
-export default connect(mapStateToProps)(withRouter(Home))
+let mapDispatchToProps = (dispatch) => ({
+  removeUser: () => {
+    dispatch({ type: USER_DEL })
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Home))
