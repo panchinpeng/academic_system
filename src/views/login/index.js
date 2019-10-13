@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { withRouter } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 
 import { userLoginAjax } from '../../ajax/user'
@@ -41,6 +42,8 @@ class Login extends Component {
   loginSuccess = (res) => {
     this.props.setLoginInfo(res)
     this.props.history.replace('/')
+    Cookies.set('username', res.username)
+    Cookies.set('idx', res.idx)
   }
   handleSubmit = (event) => {
     event.preventDefault();
@@ -55,7 +58,7 @@ class Login extends Component {
 
     if (!usernameInput.errMsg && !passwordInput.errMsg) {
       userLoginAjax(username.value, password.value, this.loginFail, this.loginSuccess)
-
+      
     }
 
     
