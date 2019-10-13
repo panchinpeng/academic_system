@@ -52,7 +52,7 @@ class Home extends Component {
           <Col>content</Col>
         </Row>
         <Row className="footer">
-          <Col>footer</Col>
+          <Col>後台管理系統版權</Col>
         </Row>
       </Container>
       )
