@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Collapse from 'react-bootstrap/Collapse'
 import Cookies from 'js-cookie'
 import { withRouter } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -13,9 +16,7 @@ import { USER_DEL } from '../../redux/actions'
 import Slider from './slider'
 import './index.scss'
 class Home extends Component {
-  state = {
-    isLogin: null
-  }
+  
   noLogin = () => {
     this.props.history.replace('/login')
     Cookies.remove('idx')
@@ -34,27 +35,42 @@ class Home extends Component {
     checkLogin(Cookies.get('idx'), Cookies.get('username'), this.noLogin, this.login)
     
   }
-  alertClicked(){
+  handlerBarClick = () => {
+    this.setState({
+      showTools: !this.state.showTools
+    })
 
+  }
+
+  state = {
+    isLogin: null,
+    showTools: true
   }
   render() {
     let {isLogin} = this.state
     if (isLogin) {
+      let {showTools} = this.state
       return (
-        <Container fluid={true}>
-        <Row className="header">
-          <Col>hreder</Col>
-        </Row>
-        <Row className="content">
-          <Col sm="3" className="d-none d-sm-block slide-wrap">
-            <Slider user={this.props.user}></Slider>
-          </Col>
-          <Col>content</Col>
-        </Row>
-        <Row className="footer">
-          <Col>後台管理系統版權</Col>
-        </Row>
-      </Container>
+        <Container fluid>
+          <Row className="header">
+            <Col  className="silder-toolbar">
+              <FontAwesomeIcon icon={faBars} size="lg" onClick={this.handlerBarClick}/>
+              <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
+            </Col>
+          </Row>
+          <Row className="home-content-wrap">
+            <Collapse in={showTools}>
+              <Col xs="12" sm="3" id="example-collapse-text" className="slide-wrap pr-0">
+                <Slider user={this.props.user}></Slider>
+              </Col>
+            </Collapse>
+            
+            <Col>content</Col>
+          </Row>
+          <Row className="footer">
+            <Col>後台管理系統版權</Col>
+          </Row>
+        </Container>
       )
     } else {
       return <div />

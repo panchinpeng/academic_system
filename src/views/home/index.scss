@@ -5,11 +5,22 @@
   color: #fff;
   text-align: center;
   line-height: 50px;
+  .silder-toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.header{
+  position: fixed;
+  width: 100%;
 }
 
-.content {
+.home-content-wrap {
   min-height: 100%;
-
+  padding-top: 50px;
+  /* padding-top 50px cause height isn't full so add margin-bottom to fill */
+  margin-bottom: 50px;
   >.slide-wrap {
     padding-left: 0;
   }
