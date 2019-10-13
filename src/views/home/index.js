@@ -6,6 +6,10 @@ import Col from 'react-bootstrap/Col'
 
 import './index.scss'
 class Home extends Component {
+  componentWillMount(){
+    // check cookie idx exist
+    
+  }
   render() {
     return (
       <Container fluid={true}>
