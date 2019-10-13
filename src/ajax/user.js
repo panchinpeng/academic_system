@@ -7,3 +7,14 @@ export const userLoginAjax = async (username, password, callbackFail, callbackSu
     callbackSuccess(response.data)
   }
 }
+
+export const checkLogin = async(idx = '', username = '', noLoginCallback) => {
+  if(!idx || !username) {
+    noLoginCallback()
+    return
+  }
+  let response = await ajax({idx, username, action: 'user', method: 'checklogin'})
+  if(response.res === 0) {
+    noLoginCallback()
+  } 
+}

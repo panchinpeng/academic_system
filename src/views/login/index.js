@@ -41,9 +41,9 @@ class Login extends Component {
 
   loginSuccess = (res) => {
     this.props.setLoginInfo(res)
-    this.props.history.replace('/')
     Cookies.set('username', res.username, { expires: 1/48 })
     Cookies.set('idx', res.idx, { expires: 1/48 })
+    this.props.history.replace('/')
   }
   handleSubmit = (event) => {
     event.preventDefault();
