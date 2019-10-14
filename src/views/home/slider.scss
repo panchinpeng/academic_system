@@ -1,0 +1,18 @@
+@import "../../common/common.scss";
+
+#example-collapse-text {
+  a {
+    @include linkString;
+
+    >.list-group-item {
+      border-radius: 0;
+      @include linkString;
+    }
+  }
+  a.active {
+   >.list-group-item{
+    background-color: var(--cyan);
+   } 
+  }
+
+}

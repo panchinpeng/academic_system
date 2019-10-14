@@ -8,12 +8,16 @@ import Cookies from 'js-cookie'
 import { withRouter } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 
 import { checkLogin } from '../../ajax/user'
 import { USER_DEL } from '../../redux/actions'
 import Slider from './slider'
+import routers from '../../routers/routers'
+
+
+
 import './index.scss'
 class Home extends Component {
   
@@ -44,7 +48,8 @@ class Home extends Component {
 
   state = {
     isLogin: null,
-    showTools: true
+    showTools: true,
+    menus: routers
   }
   render() {
     let {isLogin} = this.state
@@ -58,15 +63,34 @@ class Home extends Component {
               <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
             </Col>
           </Row>
+          <BrowserRouter>
           <Row className="home-content-wrap">
             <Collapse in={showTools}>
               <Col xs="12" sm="3" id="example-collapse-text" className="slide-wrap pr-0">
-                <Slider user={this.props.user}></Slider>
+                <Slider user={this.props.user} menus={this.state.menus}></Slider>
               </Col>
             </Collapse>
             
-            <Col>content</Col>
+            <Col className="right-content-wrap">
+              
+                <Switch>
+                  { 
+                    this.state.menus.map((item, index) => {
+                      console.log(item)
+                      
+                      return (
+                        <Route key={item.id} path={'/' + item.directory} component={item.component}>
+                        
+                        </Route>
+                      )
+                    })
+                  
+                  }
+                </Switch>
+              
+            </Col>
           </Row>
+          </BrowserRouter>
           <Row className="footer">
             <Col>後台管理系統版權</Col>
           </Row>

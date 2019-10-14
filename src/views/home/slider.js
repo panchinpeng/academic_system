@@ -1,30 +1,27 @@
 import React, { Component } from 'react'
 import { ListGroup } from 'react-bootstrap'
+import { NavLink } from 'react-router-dom'
 
-import { menuAjax } from '../../ajax/menu'
+
+import './slider.scss';
 
 export default class Slider extends Component{
-  state = {
-    menu: []
-  }
-
-  setMenu = (menu) => {
-    console.log('menu', menu)
-    this.setState({
-      menu
-    })
-  }
+  
+  
 
   renderItem = () => {
-    return this.state.menu.map((item, index) => (
-      <ListGroup.Item action key={item.id}>{item.title}</ListGroup.Item>
+    return this.props.menus.map((item, index) => (
+      <NavLink to={'/' + item.directory} key={item.id}>
+        <ListGroup.Item action key={item.id}>{item.title}</ListGroup.Item>
+      </NavLink>
+      
     ))
     
   }
 
   componentDidMount() {
-    let {username, idx} = this.props.user
-    menuAjax(username, idx, this.setMenu)
+    
+    
   }
   render() {
     return (
