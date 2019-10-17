@@ -54,12 +54,14 @@ class Login extends Component {
     let passwordInput = this.validData(password.value)
     this.setState({
       usernameInput, passwordInput
+    }, () => {
+      if (!usernameInput.errMsg && !passwordInput.errMsg) {
+        userLoginAjax(username.value, password.value, this.loginFail, this.loginSuccess)
+        
+      }
     })
 
-    if (!usernameInput.errMsg && !passwordInput.errMsg) {
-      userLoginAjax(username.value, password.value, this.loginFail, this.loginSuccess)
-      
-    }
+    
 
     
     
