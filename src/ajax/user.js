@@ -20,3 +20,9 @@ export const checkLogin = async (idx = '', username = '', callbackFail = null, c
     callbackSuccess && callbackSuccess(response.data)
   }
 }
+
+export const logout = async (username = '') => {
+  if (username) {
+    await ajax({ username, action: 'user', method: 'logout'})
+  }
+}

@@ -51,6 +51,10 @@ class Home extends Component {
     })
   }
 
+  handlerLogoutClick = () => {
+    this.noLogin()
+  }
+
 
   UNSAFE_componentWillMount(){
     // console.log(Cookies.get('idx'), Cookies.get('username'))
@@ -76,7 +80,7 @@ class Home extends Component {
           <Row className="header">
             <Col  className="silder-toolbar">
               <FontAwesomeIcon icon={faBars} size="lg" onClick={this.handlerBarClick}/>
-              <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
+              <FontAwesomeIcon icon={faSignOutAlt} size="lg" onClick={this.handlerLogoutClick}/>
             </Col>
           </Row>
           <BrowserRouter >

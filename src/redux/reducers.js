@@ -1,11 +1,16 @@
-import { USER_SET_INFO } from './actions'
+import { USER_SET_INFO, USER_DEL } from './actions'
+import { logout } from '../ajax/user'
 export const userReducer = (state = {}, actions) => {
   switch (actions.type) {
     case USER_SET_INFO: {
-      console.log('run', actions.data)
       let newState = Object.assign({}, actions.data)
       return newState
     }
+    case USER_DEL:{
+      logout(state.username)
+      return {}
+    } 
+      
     default:
       return state
   }
