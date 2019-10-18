@@ -43,6 +43,12 @@ class Home extends Component {
     })
   }
 
+  emptyBreadAry = () => {
+    this.setState({
+      breadAry: []
+    })
+    this.breadAry = null
+  }
 
 
   UNSAFE_componentWillMount(){
@@ -52,9 +58,9 @@ class Home extends Component {
    
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     
-    if (!this.breadAry && this.props.location && this.props.location.pathname !== '/') {
+    if (!this.breadAry && this.props.location.pathname !== '/') {
       // update Breadcrumb
       // console.log('a', this.props.location.pathname)
       let selectdItem = this.state.menus.find(item => item.directory === this.props.location.pathname.slice(1))
@@ -88,7 +94,7 @@ class Home extends Component {
           <Row className="home-content-wrap">
             <Collapse in={showTools}>
               <Col xs="12" sm="3" id="example-collapse-text" className="slide-wrap pr-0">
-                <Slider user={this.props.user} menus={this.state.menus} ></Slider>
+                <Slider user={this.props.user} menus={this.state.menus} emptyBreadAry={this.emptyBreadAry}></Slider>
               </Col>
             </Collapse>
             
