@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'
 import { withRouter } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 
 
@@ -33,7 +33,9 @@ class Home extends Component {
     this.setState({
       isLogin: true
     }, () => {
-      this.props.history.push('/people')  
+      this.setState({
+        breadAry: [this.state.menus[0]]
+      })
     })
   }
  
@@ -43,11 +45,10 @@ class Home extends Component {
     })
   }
 
-  emptyBreadAry = () => {
+  emptyBreadAry = (index) => {
     this.setState({
-      breadAry: []
+      breadAry: [this.state.menus[index]]
     })
-    this.breadAry = null
   }
 
 
@@ -55,23 +56,10 @@ class Home extends Component {
     // console.log(Cookies.get('idx'), Cookies.get('username'))
     // check cookie idx exist if isn't login redirect login
     checkLogin(Cookies.get('idx'), Cookies.get('username'), this.noLogin, this.login)
-   
   }
 
-  componentDidUpdate(prevProps) {
-    
-    if (!this.breadAry && this.props.location.pathname !== '/') {
-      // update Breadcrumb
-      // console.log('a', this.props.location.pathname)
-      let selectdItem = this.state.menus.find(item => item.directory === this.props.location.pathname.slice(1))
-      // console.log('b', selectdItem)
-      this.breadAry = [selectdItem]
-      // to render
-      this.setState({ breadAry: this.breadAry })
-    }
-  }
-
-
+  
+ 
   state = {
     isLogin: null,
     showTools: true,
@@ -79,6 +67,7 @@ class Home extends Component {
     breadAry : [],
   }
   render() {
+
     let {isLogin } = this.state
     if (isLogin) {
       let {showTools} = this.state
@@ -90,7 +79,7 @@ class Home extends Component {
               <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
             </Col>
           </Row>
-          <BrowserRouter>
+          <BrowserRouter >
           <Row className="home-content-wrap">
             <Collapse in={showTools}>
               <Col xs="12" sm="3" id="example-collapse-text" className="slide-wrap pr-0">
@@ -100,7 +89,7 @@ class Home extends Component {
             
             <Col className="right-content-wrap">
             <Breadcrumb>
-              {  this.breadAry && this.breadAry.map((item, index) => <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>) }
+              {  this.state.breadAry && this.state.breadAry.map((item, index) => <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>) }
             </Breadcrumb>
             
                 <Switch>
@@ -114,6 +103,7 @@ class Home extends Component {
                   }
                   
                 </Switch>
+                <Redirect to="/people"></Redirect>
             </Col>
           </Row>
           </BrowserRouter>

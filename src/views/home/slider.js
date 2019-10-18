@@ -8,10 +8,9 @@ import './slider.scss';
 export default class Slider extends Component{
   renderItem = () => {
     return this.props.menus.map((item, index) => (
-      <NavLink to={'/' + item.directory} key={item.id}>
-        <ListGroup.Item action key={item.id} onClick={this.props.emptyBreadAry}>{item.title}</ListGroup.Item>
+      <NavLink to={'/' + item.directory} key={item.id} >
+        <ListGroup.Item action key={item.id} onClick={ () => { this.props.emptyBreadAry(index) }}>{item.title}</ListGroup.Item>
       </NavLink>
-      
     ))
     
   }
@@ -19,7 +18,6 @@ export default class Slider extends Component{
     return (
       <ListGroup >
         { this.renderItem() }
-        
       </ListGroup>
     )
   }
