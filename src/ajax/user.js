@@ -23,6 +23,24 @@ export const checkLogin = async (idx = '', username = '', callbackFail = null, c
 
 export const logout = async (username = '') => {
   if (username) {
-    await ajax({ username, action: 'user', method: 'logout'})
+    await ajax({ username, action: 'user', method: 'logout' })
   }
+}
+
+export const getPeopleList = async (info, callbackFail, callbackSuccess) => {
+  console.log(info)
+  let response = await ajax({ username: info.username, idx: info.idx, action: "user", method: "getToken", ntreqtype: "peoplelist" })
+  if (response.res === 0 && response.data === 'login fail') {
+    callbackFail()
+  }
+  let token = response.data
+  response = await ajax({ "token": token, "action": "user", "method": "getData" })
+
+  if(response.code === 0) {
+    alert(response.data)
+    return;
+  }
+
+  callbackSuccess(response.data)
+  
 }

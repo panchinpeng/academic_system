@@ -1,5 +1,8 @@
 import { USER_SET_INFO, USER_DEL } from './actions'
 import { logout } from '../ajax/user'
+import Cookies from 'js-cookie'
+
+
 export const userReducer = (state = {}, actions) => {
   switch (actions.type) {
     case USER_SET_INFO: {
@@ -8,6 +11,8 @@ export const userReducer = (state = {}, actions) => {
     }
     case USER_DEL:{
       logout(state.username)
+      Cookies.remove('idx')
+      Cookies.remove('username')
       return {}
     } 
       

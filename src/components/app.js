@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 
 import Login from '../views/login'
 import Home from '../views/home'
+import Logout from '../views/logout/logout'
 import './app.scss'
 import { USER_SET_INFO } from '../redux/actions'
 
@@ -23,9 +24,13 @@ class App extends Component {
             <Route path="/login">
               <Login />
             </Route>
+            <Route path="/logout" >
+              <Logout />
+            </Route>
             <Route path="/" >
               <Home />
             </Route>
+            
           </Switch>
         </BrowserRouter>
     )
