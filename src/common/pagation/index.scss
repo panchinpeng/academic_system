@@ -1,0 +1,27 @@
+@import '../common.scss';
+
+.pagation-wrap {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 5px;
+
+  > a.page-link {
+    @include linkString;
+    padding: 5px 10px;
+    background-color: transparent;
+    border-radius: 4px;
+    margin-right: 4px;
+    border: 1px solid var(--cyan);
+  }
+
+  > a.page-link:hover,
+  a.page-link:focus,
+  a.page-link:active {
+    border: 1px solid var(--cyan);
+    background-color: var(--cyan);
+  }
+
+  >.page-link.active {
+    border: 2px solid var(--primary);
+  }
+}

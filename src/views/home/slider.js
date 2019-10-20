@@ -1,20 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 
 
 import './slider.scss';
 
-export default class Slider extends Component{
+export default class Slider extends React.PureComponent{
   renderItem = () => {
     return this.props.menus.map((item, index) => (
-      <NavLink to={'/' + item.directory} key={item.id} >
+      <NavLink to={'/' + item.directory + '/1'} key={item.id} >
         <ListGroup.Item action key={item.id} onClick={ () => { this.props.emptyBreadAry(index) }}>{item.title}</ListGroup.Item>
       </NavLink>
     ))
     
   }
+
   render() {
+   
     return (
       <ListGroup >
         { this.renderItem() }

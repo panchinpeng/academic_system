@@ -59,6 +59,7 @@ class Home extends Component {
     checkLogin(Cookies.get('idx'), Cookies.get('username'), this.noLogin, this.login)
   }
 
+
   
  
   state = {
@@ -79,48 +80,42 @@ class Home extends Component {
               <FontAwesomeIcon icon={faBars} size="lg" onClick={this.handlerBarClick}/>
               <FontAwesomeIcon icon={faSignOutAlt} size="lg" onClick={this.handlerLogoutClick}/>
             </Col>
-          </Row>
-
-
-              
-            <Row className="home-content-wrap">
-              <Collapse in={showTools}>
-                <Col xs="12" sm="3" id="example-collapse-text" className="slide-wrap pr-0">
-                  <Slider user={this.props.user} menus={this.state.menus} emptyBreadAry={this.emptyBreadAry}></Slider>
-                </Col>
-              </Collapse>
-              
-              <Col className="right-content-wrap">
-              <Breadcrumb>
-                {  this.state.breadAry && this.state.breadAry.map((item, index) => <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>) }
-              </Breadcrumb>
-                  <TransitionGroup className="todo-list">
-                    <CSSTransition
-                      timeout={1000}
-                      classNames={'page'}
-                      key={this.props.location.pathname}
-                    >
-                      <Switch location={this.props.location}>
-                        
-                            { 
-                              this.state.menus.map((item, index) => {        
-                                return (
-                                  <Route key={item.id} path={'/' + item.directory} component={item.component}></Route>
-                                )
-                              })
-                            
-                            }
-                          
-                      </Switch>
-                    </CSSTransition>
-                  </TransitionGroup>
-                  
-                  <Redirect to="/people"></Redirect>
+          </Row> 
+          <Row className="home-content-wrap">
+            <Collapse in={showTools}>
+              <Col xs="12" sm="3" id="example-collapse-text" className="slide-wrap pr-0">
+                <Slider user={this.props.user} menus={this.state.menus} emptyBreadAry={this.emptyBreadAry}></Slider>
               </Col>
-            </Row>
-          
-          
-
+            </Collapse>
+            
+            <Col className="right-content-wrap">
+            <Breadcrumb>
+              {  this.state.breadAry && this.state.breadAry.map((item, index) => <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>) }
+            </Breadcrumb>
+              <TransitionGroup className="todo-list">
+                <CSSTransition
+                  timeout={1000}
+                  classNames={'page'}
+                  key={this.props.location.pathname}
+                >
+                  <Switch location={this.props.location}>
+                    
+                    { 
+                      this.state.menus.map((item, index) => {        
+                        return (
+                          <Route key={item.id} path={'/' + item.directory + '/:page'} component={item.component}></Route>
+                        )
+                      })
+                    
+                    }
+                    <Redirect to="/people/1"></Redirect>
+                  </Switch>
+                  
+                </CSSTransition>
+              </TransitionGroup>
+                
+            </Col>
+          </Row>
           <Row className="footer">
             <Col>後台管理系統版權</Col>
           </Row>
@@ -136,7 +131,5 @@ class Home extends Component {
 let mapStateToProps = (state) => ({
   user: state.user
 })
-
-
 
 export default connect(mapStateToProps)(withRouter(Home))
