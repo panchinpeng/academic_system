@@ -71,6 +71,8 @@ class Home extends Component {
   render() {
 
     let {isLogin } = this.state
+    let {pathname} = this.props.location
+    console.log(pathname)
     if (isLogin) {
       let {showTools} = this.state
       return (
@@ -108,7 +110,7 @@ class Home extends Component {
                       })
                     
                     }
-                    <Redirect to="/people/1"></Redirect>
+                    <Redirect to={( pathname !== '/' ? pathname : '/people' ) + '/1'}></Redirect>
                   </Switch>
                   
                 </CSSTransition>
