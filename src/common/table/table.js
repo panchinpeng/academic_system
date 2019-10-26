@@ -44,10 +44,11 @@ export default class MyTable extends React.PureComponent  {
   }
 
   doDel = () => {
-    this.setState({
-      showAlert: false
-    })
     this.props.remove(this.state.saveTmpChecked)
+    this.setState({
+      showAlert: false,
+      saveTmpChecked: []
+    })
   }
 
   renderHtml(datas) {
