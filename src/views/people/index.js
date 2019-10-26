@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getPeopleList } from '../../ajax/user'
+import { getPeopleList, delPeople } from '../../ajax/user'
 
 
 import MyTable from '../../common/table/table'
@@ -28,6 +28,17 @@ class People extends Component{
     this.props.history.replace('/logout')
   }
 
+  removeUsers = (checkedData) => {
+    // get will delete id
+    let info = { username: this.props.user.username, idx: this.props.user.idx, user_ids: checkedData.join(',')}
+    delPeople(info, this.noLogin, this.getList)
+  }
+
+  getList = () => {
+    let info = { username: this.props.user.username, idx: this.props.user.idx, pageSize: PAGE_SIZE, page: this.props.match.params.page * 1}
+    getPeopleList(info, this.noLogin, this.setList)
+  }
+
   state = {
     dataSum : 0,
     peopleList: [],
@@ -36,9 +47,7 @@ class People extends Component{
 
   
   componentDidMount() {
-    let info = { username: this.props.user.username, idx: this.props.user.idx, pageSize: PAGE_SIZE, page: this.props.match.params.page * 1}
-    getPeopleList(info, this.noLogin, this.setList)
-    
+    this.getList()
   }
   render(){
     return (
@@ -47,7 +56,7 @@ class People extends Component{
         {
           this.state.fieldTitles && this.state.peopleList.length > 0 ? (
             <div>
-              <MyTable titles={this.state.fieldTitles} datas={this.state.peopleList}/>
+              <MyTable titles={this.state.fieldTitles} datas={this.state.peopleList} remove={this.removeUsers}/>
               <Pagation dataSum={this.state.dataSum} onePeriod={PAGE_SIZE}/>
             </div>
           ) : ''

@@ -44,3 +44,21 @@ export const getPeopleList = async (info, callbackFail, callbackSuccess) => {
   callbackSuccess(response.data)
   
 }
+
+export const delPeople = async (info, callbackFail, callbackSuccess) => {
+
+  let response = await ajax({ username: info.username, idx: info.idx, action: "user", method: "getToken", ntreqtype: "deleteUser"})
+  if (response.res === 0 && response.data === 'login fail') {
+    callbackFail()
+  }
+  let token = response.data
+  response = await ajax({ "token": token, action: "user", method: "getData", user_ids: info.user_ids })
+
+  if(response.code === 0) {
+    alert(response.data)
+    return;
+  }
+
+  callbackSuccess(response.data)
+  
+}
