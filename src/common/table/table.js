@@ -8,7 +8,10 @@ import MyModal from '../myModal/myModal'
 
 export default class MyTable extends React.PureComponent  {
   static propTypes = {
-    remove: PropTypes.func.isRequired
+    remove: PropTypes.func.isRequired,
+    add: PropTypes.func.isRequired,
+    update: PropTypes.func.isRequired
+
   }
   state = {
     saveTmpChecked: [],
@@ -51,15 +54,21 @@ export default class MyTable extends React.PureComponent  {
     })
   }
 
+  doUpdate = () => {
+    // console.log(this.state.saveTmpChecked)
+    // only one
+    this.props.update(this.state.saveTmpChecked[0])
+  }
+
   renderHtml(datas) {
     return datas.map((item, rowIndex) => {
       let id = item.id
       return (
         <tr key={`tr${id}`} onClick={ this.markClick } className="row-item" data-id={id}>
-          <td className="d-none d-md-table-cell" key={`rd${id}`}>{id}</td>
+          <td className="d-none d-md-table-cell" key={`rd${id}`}>{rowIndex + 1}</td>
           {
             Object.keys(item).map(index => (
-              <td key={`${id}${index}`}>{item[index]}</td>
+              index !== 'id' && <td key={`${id}${index}`}>{item[index]}</td>
             ))
           }
         </tr>
@@ -85,9 +94,9 @@ export default class MyTable extends React.PureComponent  {
         </Table>
 
         <div className="action-wrap">
-          <Button variant="info" className="mr-1">新增</Button>
+          <Button variant="info" className="mr-1" onClick={this.props.add}>新增</Button>
           {
-            this.state.saveTmpChecked.length === 1 && <Button variant="info" className="mr-1">修改</Button>
+            this.state.saveTmpChecked.length === 1 && <Button variant="info" className="mr-1" onClick={this.doUpdate}>修改</Button>
           }
           {
             this.state.saveTmpChecked.length > 0 && <Button variant="info" onClick={this.doDelAlert}>刪除</Button>

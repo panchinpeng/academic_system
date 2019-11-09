@@ -8,14 +8,16 @@ import Cookies from 'js-cookie'
 import { withRouter } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import routers from '../../routers/routers'
 
+import { BREAD_ADD } from '../../redux/actions'
 import { checkLogin } from '../../ajax/user'
 
 import Slider from './slider'
-import routers from '../../routers/routers'
+
 
 
 
@@ -30,9 +32,8 @@ class Home extends Component {
     this.setState({
       isLogin: true
     }, () => {
-      this.setState({
-        breadAry: [this.state.menus[0]]
-      })
+      this.props.updateBread([this.state.menus.find(item => item.id*1 === 1)])
+
     })
   }
  
@@ -43,15 +44,15 @@ class Home extends Component {
   }
 
   emptyBreadAry = (index) => {
-    this.setState({
-      breadAry: [this.state.menus[index]]
-    })
+    this.props.updateBread([this.state.menus[index]])
+
   }
 
   handlerLogoutClick = () => {
     this.noLogin()
   }
 
+  
 
   UNSAFE_componentWillMount(){
     // console.log(Cookies.get('idx'), Cookies.get('username'))
@@ -66,13 +67,11 @@ class Home extends Component {
     isLogin: null,
     showTools: true,
     menus: routers,
-    breadAry : [],
   }
   render() {
 
     let {isLogin } = this.state
     let {pathname} = this.props.location
-    console.log(pathname)
     if (isLogin) {
       let {showTools} = this.state
       return (
@@ -92,9 +91,9 @@ class Home extends Component {
             
             <Col className="right-content-wrap">
             <Breadcrumb>
-              {  this.state.breadAry && this.state.breadAry.map((item, index) => <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>) }
+              {  this.props.breadAry && this.props.breadAry.map((item, index) => <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>) }
             </Breadcrumb>
-              <TransitionGroup className="todo-list">
+              <TransitionGroup className="todo-list" appear>
                 <CSSTransition
                   timeout={1000}
                   classNames={'page'}
@@ -105,12 +104,13 @@ class Home extends Component {
                     { 
                       this.state.menus.map((item, index) => {        
                         return (
-                          <Route key={item.id} path={'/' + item.directory + '/:page'} component={item.component}></Route>
+                          <Route exact key={item.id} path={'/' + item.directory + (item.params ? item.params : '') } component={item.component}></Route>
                         )
                       })
-                    
+                      
                     }
-                    <Redirect to={( pathname !== '/' ? pathname : '/people' ) + '/1'}></Redirect>
+                    
+                    <Redirect to={( pathname !== '/' && pathname.indexOf('/people') === -1 ? pathname : '/people/1' ) }></Redirect>
                   </Switch>
                   
                 </CSSTransition>
@@ -131,7 +131,12 @@ class Home extends Component {
 }
 
 let mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  breadAry: state.bread
 })
-
-export default connect(mapStateToProps)(withRouter(Home))
+let mapDispatchToProps = (dispatch) => ({
+  updateBread: (bread) => {
+    dispatch({ type: BREAD_ADD, data: bread })
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Home))

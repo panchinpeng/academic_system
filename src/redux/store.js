@@ -1,8 +1,9 @@
 import { createStore, combineReducers } from 'redux'
 
-import { userReducer } from './reducers'
+import { userReducer, breadReducer } from './reducers'
 let store = createStore(combineReducers({
-  user: userReducer
+  user: userReducer,
+  bread: breadReducer
 }),
 // show redux devtools
 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
