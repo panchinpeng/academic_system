@@ -8,17 +8,12 @@ import './slider.scss';
 export default class Slider extends React.PureComponent{
   renderItem = () => {
     return this.props.menus.map((item, index) => (
-      !item.hiddenSlider &&
+      !item.hiddenSlider && item.render &&
       <NavLink to={'/' + item.directory} key={item.id} >
         <ListGroup.Item action key={item.id} onClick={ () => { this.props.emptyBreadAry(index) }}>{item.title}</ListGroup.Item>
       </NavLink>
-      
-      
     ))
-    
   }
-
-
   render() {
    
     return (

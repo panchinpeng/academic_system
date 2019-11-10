@@ -40,10 +40,10 @@ class PeopleAdd extends React.PureComponent {
 
   componentDidMount() {
     // bread title
-    if (this.props.bread.length === 0) {
-      this.props.history.replace('/people')
-      return;
-    }
+    // if (this.props.bread.length === 0) {
+    //   this.props.history.replace('/people')
+    //   return;
+    // }
     let nowRoute
     if (this.props.location.state) {
       nowRoute = { title : '修改人員'}

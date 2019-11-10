@@ -9,6 +9,7 @@ import { PAGE_SIZE } from '../../constants/constant'
 import PeopleAdd from '../../views/people/peopleAdd'
 import { BREAD_DEL } from '../../redux/actions'
 import fileAjax from '../../ajax/fileAjax'
+import bread from '../../routers/bread'
 
 
 import './index.scss'
@@ -119,9 +120,7 @@ let mapStateToProps = (state) => ({
   user: state.user
 })
 let mapDispatchToProps = (dispatch) => ({
-  remoteBread: () => {
-    dispatch({ type: BREAD_DEL })
-  }
+ 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(People))

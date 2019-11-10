@@ -17,13 +17,13 @@ import { BREAD_ADD } from '../../redux/actions'
 import { checkLogin } from '../../ajax/user'
 
 import Slider from './slider'
-
+import bread from '../../routers/bread'
 
 
 
 import './index.scss'
-class Home extends Component {
-  
+class Home extends React.PureComponent {
+
   noLogin = () => {
     this.props.history.replace('/logout')
   }
@@ -32,10 +32,28 @@ class Home extends Component {
     this.setState({
       isLogin: true
     }, () => {
-      this.props.updateBread([this.state.menus.find(item => item.id*1 === 1)])
-
+      // this.props.updateBread([this.state.menus.find(item => item.id*1 === 1)])
+      // this.setState({
+      //   selectedMenu: [this.state.menus.find(item => item.id*1 === 1)]
+      // })
     })
   }
+  componentDidUpdate() {
+    let breadName = bread(this.props.location.pathname)
+    let {selectedMenu} = this.state
+    console.log(selectedMenu)
+    if (breadName && (selectedMenu[selectedMenu.length - 1] === undefined || 
+      breadName.title !== selectedMenu[selectedMenu.length - 1].title)
+    ) {
+      let breadData = routers.find(item => item.title === breadName.title)
+      this.setState({
+        selectedMenu: [breadData]
+      })
+    }
+    
+  }
+
+  
  
   handlerBarClick = () => {
     this.setState({
@@ -44,21 +62,25 @@ class Home extends Component {
   }
 
   emptyBreadAry = (index) => {
-    this.props.updateBread([this.state.menus[index]])
-
+    // this.props.updateBread([this.state.menus[index]])
+    this.setState({
+      selectedMenu: [this.state.menus[index]]
+    })
   }
 
   handlerLogoutClick = () => {
     this.noLogin()
   }
 
+ 
   
 
-  UNSAFE_componentWillMount(){
+  componentDidMount(){
     // console.log(Cookies.get('idx'), Cookies.get('username'))
     // check cookie idx exist if isn't login redirect login
     checkLogin(Cookies.get('idx'), Cookies.get('username'), this.noLogin, this.login)
   }
+
 
 
   
@@ -67,9 +89,9 @@ class Home extends Component {
     isLogin: null,
     showTools: true,
     menus: routers,
+    selectedMenu: []
   }
   render() {
-
     let {isLogin } = this.state
     let {pathname} = this.props.location
     if (isLogin) {
@@ -91,7 +113,7 @@ class Home extends Component {
             
             <Col className="right-content-wrap">
             <Breadcrumb>
-              {  this.props.breadAry && this.props.breadAry.map((item, index) => <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>) }
+              {  this.state.selectedMenu && this.state.selectedMenu.map((item, index) => <Breadcrumb.Item key={index}>{item.title}</Breadcrumb.Item>) }
             </Breadcrumb>
               <TransitionGroup className="todo-list" appear>
                 <CSSTransition
@@ -132,11 +154,8 @@ class Home extends Component {
 
 let mapStateToProps = (state) => ({
   user: state.user,
-  breadAry: state.bread
 })
 let mapDispatchToProps = (dispatch) => ({
-  updateBread: (bread) => {
-    dispatch({ type: BREAD_ADD, data: bread })
-  }
+
 })
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Home))
