@@ -1,0 +1,48 @@
+.file-upload-wrap {
+  margin: 10px 0;
+
+  #dropZoneWrap {
+    box-shadow: 1px 1px 10px rgba(204, 204, 204, .2) inset, -1px -1px 10px rgba(204, 204, 204, .2) inset;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 5px;
+    width: 150px;
+    color: #ccc;
+    border: 2px dashed;
+
+
+    &.dz-drag-hover {
+      opacity: .5;
+    }
+  }
+
+  .preview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 1;
+    align-items: flex-start;
+
+    .dz-details {
+      position: relative;
+      border: 3px solid #2d3eb7;
+      padding: 3px;
+      border-radius: 10px;
+      margin-right: 5px;
+      margin-top: 5px;
+
+      .data-dz-remove {
+        position: absolute;
+        top: 0%;
+        right: 5px;
+        font-size: 25px;
+        color: aliceblue;
+        cursor: pointer;
+        color: #d40e0e;
+        display: flex;
+      }
+    }
+
+  }
+}

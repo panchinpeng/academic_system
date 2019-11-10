@@ -2,12 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
+import Image from 'react-bootstrap/Image'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { withRouter } from 'react-router-dom'
 
 import { BREAD_ADD, BREAD_DEL } from '../../redux/actions'
 import PropTypes from 'prop-types'
-class PeopleAdd extends React.Component {
+import FileUpload from '../../common/file/FileUpload'
+class PeopleAdd extends React.PureComponent {
   static propTypes = {
     doAction: PropTypes.func.isRequired
   }
@@ -34,8 +38,12 @@ class PeopleAdd extends React.Component {
     this.props.history.goBack()
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     // bread title
+    if (this.props.bread.length === 0) {
+      this.props.history.replace('/people')
+      return;
+    }
     let nowRoute
     if (this.props.location.state) {
       nowRoute = { title : '修改人員'}
@@ -46,14 +54,26 @@ class PeopleAdd extends React.Component {
       nowRoute = { title : '新增人員'}
     }
     this.props.updateBread([...this.props.bread, nowRoute])
+
+
   }
   render() {
     let {status} = this.state
     return (
       <div>
+        {
+          status === 'update' && (
+            <Row>
+              <Col xs={12} className="text-center my-1">
+                <Image src={`http://localhost:80/react/academic_backend/image/user/userImage.php?id=${this.props.location.state.id}&r=${Math.random()}`} thumbnail  style={{maxWidth: 200, width: '100%'}}/>
+              </Col>
+            </Row>
+          )
+        }
+        
         <Card>
           <Card.Body>
-          <Form ref={(f) => this.form = f} onSubmit={this.do}>
+          <Form ref={(f) => this.form = f} onSubmit={this.do} encType="multipart/form-data">
             <Form.Group controlId="username">
               <Form.Label>帳號</Form.Label>
               {
@@ -80,6 +100,8 @@ class PeopleAdd extends React.Component {
                 status === 'add' ? <Form.Control placeholder="請輸入姓名" required /> : <Form.Control placeholder="請輸入姓名" required defaultValue={this.props.location.state.realname} />
               }
             </Form.Group>
+            個人圖像
+            <FileUpload getFileList={this.props.getFileList}></FileUpload>
             <Button variant="primary" type="submit">
               確定新增
             </Button>

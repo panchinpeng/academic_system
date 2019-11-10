@@ -65,7 +65,7 @@ export default class MyTable extends React.PureComponent  {
       let id = item.id
       return (
         <tr key={`tr${id}`} onClick={ this.markClick } className="row-item" data-id={id}>
-          <td className="d-none d-md-table-cell" key={`rd${id}`}>{rowIndex + 1}</td>
+          <td className="d-none d-md-table-cell" key={`rd${id}`}>{id}</td>
           {
             Object.keys(item).map(index => (
               index !== 'id' && <td key={`${id}${index}`}>{item[index]}</td>

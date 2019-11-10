@@ -101,7 +101,6 @@ export const updatePeople = async (info, callbackFail, callbackSuccess) => {
     alert('請求發生錯誤')
     return;
   }
-
   callbackSuccess(response.data)
-
 }
+

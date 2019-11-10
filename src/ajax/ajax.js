@@ -1,5 +1,5 @@
-export default async function (postData) {
-  let response = await fetch('/controller.php', {
+export default async function (postData, url = '/controller.php') {
+  let response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify(postData)
   }).then(res => {

@@ -8,6 +8,7 @@ import Pagation from '../../common/pagation/pagation'
 import { PAGE_SIZE } from '../../constants/constant'
 import PeopleAdd from '../../views/people/peopleAdd'
 import { BREAD_DEL } from '../../redux/actions'
+import fileAjax from '../../ajax/fileAjax'
 
 
 import './index.scss'
@@ -53,7 +54,11 @@ class People extends Component{
     updatePeople(obj, this.noLogin, this.addSuccess)
   }
 
-  addSuccess = () => {
+
+  addSuccess = (insertId) => {
+    insertId = insertId || this.props.location.state.id
+    // update img
+    this.dzObj.files.length && fileAjax({ id: insertId}, this.dzObj.files, this.props.user)
     this.props.history.replace('/people')
     this.props.remoteBread()
   }
@@ -61,6 +66,10 @@ class People extends Component{
   getList = () => {
     let info = { username: this.props.user.username, idx: this.props.user.idx, pageSize: PAGE_SIZE, page: this.props.match.params.page * 1}
     getPeopleList(info, this.noLogin, this.setList)
+  }
+
+  getFileList = (dzObj) => {
+    this.dzObj = dzObj
   }
 
   state = {
@@ -82,7 +91,7 @@ class People extends Component{
       return (
         <div className="content-wrap">
           <Route path={["/people/add", "/people/update"]}>
-            <PeopleAdd doAction={page === 'add' ? this.tableAddDoAction : this.tableUpdateDoAction} />
+            <PeopleAdd getFileList={this.getFileList} doAction={page === 'add' ? this.tableAddDoAction : this.tableUpdateDoAction} />
 
           </Route>
         </div>
