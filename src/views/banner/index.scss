@@ -2,5 +2,29 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  
+  perspective: 1000px;
+  padding-bottom: 200px;
+}
+
+
+.add-btn {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  z-index: 1;
+  display: none;
+}
+.popup-wrap {
+  width: 100%;
+  height: 80%;
+  .popup-content {
+    overflow-y: auto;
+  }
+  .popup-title {
+    text-shadow: none;
+  } 
+}
+
+.scroll-wrap {
+  height: 150px;
 }

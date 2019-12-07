@@ -7,9 +7,7 @@ import MyTable from '../../common/table/table'
 import Pagation from '../../common/pagation/pagation'
 import { PAGE_SIZE } from '../../constants/constant'
 import PeopleAdd from '../../views/people/peopleAdd'
-import { BREAD_DEL } from '../../redux/actions'
 import fileAjax from '../../ajax/fileAjax'
-import bread from '../../routers/bread'
 
 
 import './index.scss'
@@ -61,7 +59,7 @@ class People extends Component{
     // update img
     this.dzObj.files.length && fileAjax({ id: insertId}, this.dzObj.files, this.props.user)
     this.props.history.replace('/people')
-    this.props.remoteBread()
+    // this.props.remoteBread()
   }
 
   getList = () => {

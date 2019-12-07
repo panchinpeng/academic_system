@@ -10,8 +10,8 @@ export default class MyTable extends React.PureComponent  {
   static propTypes = {
     remove: PropTypes.func.isRequired,
     add: PropTypes.func.isRequired,
-    update: PropTypes.func.isRequired
-
+    update: PropTypes.func.isRequired,
+    datas: PropTypes.array.isRequired
   }
   state = {
     saveTmpChecked: [],

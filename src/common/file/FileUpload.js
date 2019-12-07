@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 import './FileUpload.scss'
 class FileUpload extends React.Component{
   static propTypes = {
-    getFileList: PropTypes.func.isRequired
+    getFileList: PropTypes.func.isRequired,
+    removeEvent: PropTypes.func
   }
   state = {
     files : []
@@ -34,6 +35,8 @@ class FileUpload extends React.Component{
     this.setState({
       files: this.myDropzone.files
     })
+
+    this.props.removeEvent && this.props.removeEvent()
   }
   componentDidUpdate() {
     this.myDropzone && this.props.getFileList(this.myDropzone)

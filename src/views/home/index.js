@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -13,7 +13,6 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import routers from '../../routers/routers'
 
-import { BREAD_ADD } from '../../redux/actions'
 import { checkLogin } from '../../ajax/user'
 
 import Slider from './slider'

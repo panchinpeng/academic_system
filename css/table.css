@@ -1,0 +1,19 @@
+.row-item {
+  position: relative;
+}
+
+.row-item.mark {
+  background-color: rgba(10, 173, 175, 0.83) !important;
+}
+
+.action-wrap {
+  position: absolute;
+  right: 0;
+  top: 1%;
+  width: 210px;
+  height: 60px;
+  text-align: right;
+  padding-right: 15px;
+  display: none;
+}
+/*# sourceMappingURL=table.css.map */
