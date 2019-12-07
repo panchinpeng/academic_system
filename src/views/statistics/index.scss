@@ -1,0 +1,15 @@
+.number-wrap {
+  display: flex;
+  .today-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(148, 148, 148, 0.14901960784313725);
+    flex-direction: column;
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    margin: 4px;
+    box-shadow: 0px 0px 1px 1px #03425e0f;
+  }
+}
